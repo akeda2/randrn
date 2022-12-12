@@ -12,7 +12,7 @@ import argparse
 # Example:
 # randrn.py glenn* -s .mp4
 # Don't forget the "." in the suffix!
-# Also: If you don't use a wildcard, you can't use a suffix!
+
 parser = argparse.ArgumentParser(description="randrn - rename files with random names",
                                 formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 #parser.add_argument('file', default=None, nargs='?', type=argparse.FileType('w'), help="Filename. If omitted, all files in current directory will be selected. Add wildcard.")
@@ -74,14 +74,10 @@ if 1 == 0: #not args.recursive:
 else:# args.recursive:
     root_dir = os.getcwd()
     # Iterate over the directory tree using os.walk()
-    # if args.recursive:
-    #     rtopdown = False
-    # else:
-    #     rtopdown = True
-
     for root, dirs, files in os.walk(root_dir, topdown=not args.recursive):
         
-        if not args.recursive: #args.nonrec:
+        # If we don't want to go into subdirs, clear dirs.
+        if not args.recursive:
             dirs.clear()
         # Use glob to generate a list of files that match the wildcard pattern
         wildcard_files = glob.glob(os.path.join(root, args.wildcard))
