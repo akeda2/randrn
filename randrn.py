@@ -34,7 +34,7 @@ print("Pattern:", pattern)
 
 def nonalphanum(s):
     #return bool(re.search(r'[^a-zå-öA-ZÅ-Ö0-9]', s))
-    pattern = re.compile(r'[^\w]|[^a-zA-ZåäöÅÄÖ-]')
+    pattern = re.compile(r'[^\w]|[^a-zA-ZåäöÅÄÖ]')
     return bool(pattern.search(s))
 
 # if 1 == 0: #not args.recursive:
@@ -91,15 +91,16 @@ for root, dirs, files in os.walk(root_dir, topdown=not args.recursive):
     # Use glob to generate a list of files that match the wildcard pattern
     wildcard_files = glob.glob(os.path.join(root, args.wildcard))
     
-    for file in wildcard_files:
-        if args.auto and not nonalphanum(file):
-            #files
-            print("Removing:", file)
-            continue
+    # for file in wildcard_files:
+    #     if args.auto and not nonalphanum(file):
+    #         #files
+    #         print("Removing:", file)
+    #         continue
     # Iterate over the list of files
     for file in wildcard_files:
         if args.auto and not nonalphanum(file):
-            dirs.remove(file)
+            #dirs.remove(file)
+            print("Not renaming:", file)
             continue
         if os.path.isfile(file):
             # Split the file name and the suffix
