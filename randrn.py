@@ -21,7 +21,7 @@ parser.add_argument("-s", "--suffix", default=False, type=str, help="Suffix to s
 parser.add_argument("-d", "--dir", default=False, action="store_true", help="Also rename directories")
 parser.add_argument("-R", "--recursive", default=False, action="store_true", help="Recursive mode")
 #parser.add_argument("-n", "--nonrec", default=False, action="store_true", help="Testing...")
-parser.add_argument("-n", "--now" default=False, action="store_true", help="Use datetime NOW iso mtime")
+parser.add_argument("-n", "--now", default=False, action="store_true", help="Use datetime NOW iso mtime")
 args = parser.parse_args()
 config = vars(args)
 
