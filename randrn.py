@@ -51,27 +51,26 @@ for root, dirs, files in os.walk(root_dir, topdown=not args.recursive):
     # Use glob to generate a list of files that match the wildcard pattern
     wildcard_files = glob.glob(os.path.join(root, args.wildcard))
     
-    # Iterate over the list of files
+    # Iterate over the list of files:
     for file in wildcard_files:
         if args.auto and not nonalphanum(os.path.split(file)[1]):
             print("Not renaming:", file)
             continue
         if os.path.isfile(file):
-            # Split the file name and the suffix
+            # Split the file name and the suffix:
             file_name, file_suffix = os.path.splitext(file)
 
             # Strip mode?:
-            if args.strip and nonalphanum(os.path.split(file)[1]):# and not len(os.path.split(file)[1]) < 1:
+            if args.strip and nonalphanum(os.path.split(file)[1]):
                 print("Strip:", os.path.split(file)[1])
                 new_name = re.sub('[^0-9a-zA-Z\-._]+', '_'+''.join(random.choices(string.ascii_lowercase + string.digits, k=8)), os.path.split(file_name)[1])
                 if len(new_name) < 1:
                     new_name = ''.join(random.choices(string.ascii_lowercase + string.digits, k=24))
-
-            # Or generate a random name
+            # Or generate a random name:
             else:
                 new_name = ''.join(random.choices(string.ascii_lowercase + string.digits, k=24))
 
-            # Get the current date and time
+            # Get the current date and time OR mtime from file?:
             if args.now:
                 date_time = datetime.datetime.now()
             else:
@@ -97,27 +96,23 @@ for root, dirs, files in os.walk(root_dir, topdown=not args.recursive):
             # Get the directory name of the file
             directory = os.path.dirname(file)
             
-            # Strip mode?:
-            # if args.strip and nonalphanum(os.path.split(file)[1]) and not len(os.path.split(file)[1]) < 1:
-            #     print("Strip:", os.path.split(file)[1])
-            #     new_file = re.sub('[^0-9a-zA-Z\-._]+', '', os.path.split(file)[1])
-            
-            # Rename the file
+            # Actually enaming the file:
             print("Renaming:", file, "to:", new_file)
             os.rename(os.path.join(directory, file), os.path.join(directory, new_file))
     if args.dir:
         for dir in dirs:
+            # Auto mode?:
             if args.auto and not nonalphanum(dir):
                 print("Not ranaming:", dir)
                 continue
             
-            if args.strip and nonalphanum(dir):# and not len(os.path.split(file)[1]) < 1:
+            # Strip mode?:
+            if args.strip and nonalphanum(dir):
                 print("Strip:", os.path.split(file)[1])
                 new_name = re.sub('[^0-9a-zA-Z\-._]+', ''.join(random.choices(string.ascii_lowercase + string.digits, k=8)), os.path.split(file_name)[1])
                 if len(new_name) < 1:
                     new_name = ''.join(random.choices(string.ascii_lowercase + string.digits, k=24))
-
-            # Or generate a random name
+            # Or generate a random name:
             else:
                 new_name = ''.join(random.choices(string.ascii_lowercase + string.digits, k=24))
             
@@ -134,7 +129,8 @@ for root, dirs, files in os.walk(root_dir, topdown=not args.recursive):
             else:
                 new_file = date_time_str + '_' + new_name
             directory = dir
-            # Rename the file
+
+            # Actually renaming the dir:
             print("Renaming:", directory, "to:", new_file)
             os.rename(directory, new_file)
             if not args.recursive:
