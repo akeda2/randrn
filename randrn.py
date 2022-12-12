@@ -119,7 +119,7 @@ for root, dirs, files in os.walk(root_dir, topdown=not args.recursive):
             if args.suffix:
                 if not str.startswith(".", args.suffix):
                     file_suffix = "."+ args.suffix
-                else
+                else:
                     file_suffix = args.suffix
             new_file = date_time_str + '_' + new_name + file_suffix
             
