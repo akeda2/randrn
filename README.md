@@ -1,6 +1,29 @@
 # randrn
 Random name renamer
+#### Use-case #1:
+You have an amount of files with garbled names. Use this to rename files to more easy to maintain names:
+By default, including:
+- Modyfied date and time
+- Counting from 0001 to 9999, sorted by modyfied date/time
+- 16 alphanumerical random characters
+- Original suffix or one by your choice
 
+#### Example:
+```
+$ randrn *.txt
+'Some file name with &%¤# in it.txt' --> 2022-12-12_09-49-45_0001_cya5x6mk6spb19tt.txt
+```
+#### Use-case #2:
+You have an amount of files with non alphanumerical characters in the file name - garbage filenames:
+- Use "-a or --auto": Only renames files which actually have garbage in the filenames.
+- Use "-S or --strip": Only strips out garbage and replaces it with alphanumerical randomness.
+
+#### Example of --strip:
+```
+$ randrn --strip Some*
+'Some file name with &%¤# in it.txt' --> Some_kiflx11hfile_kiflx11hname_kiflx11hwith_kiflx11hin_kiflx11hit.txt
+(this will probably change into something more useful...)
+```
 ## Usage:
 ```
 randrn -h
