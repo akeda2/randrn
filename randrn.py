@@ -34,7 +34,7 @@ print("Pattern:", pattern)
 
 def nonalphanum(s):
     #return bool(re.search(r'[^a-zå-öA-ZÅ-Ö0-9]', s))
-    pattern = re.compile(r'[^\w]|[^a-zA-ZåäöÅÄÖ]')
+    pattern = re.compile(r'[^\w]|[^a-zA-ZåäöÅÄÖ]', flags=re.UNICODE)
     return bool(pattern.search(s))
 
 # if 1 == 0: #not args.recursive:
