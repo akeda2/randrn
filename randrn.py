@@ -50,9 +50,11 @@ for root, dirs, files in os.walk(root_dir, topdown=not args.recursive):
 
     # Use glob to generate a list of files that match the wildcard pattern
     wildcard_files = glob.glob(os.path.join(root, args.wildcard))
-    
+    wildcard_files.sort(key=lambda x: os.path.getmtime(x))
     # Iterate over the list of files:
+    i=0
     for file in wildcard_files:
+        i+=1
         if args.auto and not nonalphanum(os.path.split(file)[1]):
             print("Not renaming:", file)
             continue
@@ -89,7 +91,7 @@ for root, dirs, files in os.walk(root_dir, topdown=not args.recursive):
                 else:
                     file_suffix = args.suffix
             if not args.strip:
-                new_file = date_time_str + '_' + new_name + file_suffix
+                new_file = date_time_str + '_' + f"{i:04d}" + new_name + file_suffix
             else:
                 new_file = new_name + file_suffix
             
