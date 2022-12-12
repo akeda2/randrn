@@ -27,7 +27,8 @@ parser.add_argument("-R", "--recursive", default=False, action="store_true", hel
 parser.add_argument("-n", "--now", default=False, action="store_true", help="Use datetime NOW iso mtime")
 args = parser.parse_args()
 config = vars(args)
-
+if args.strip:
+    args.auto = True
 # Use glob to find all files that match the wildcard pattern in the current directory
 pattern = args.wildcard
 files = glob.glob(pattern)
@@ -59,8 +60,16 @@ for root, dirs, files in os.walk(root_dir, topdown=not args.recursive):
             # Split the file name and the suffix
             file_name, file_suffix = os.path.splitext(file)
 
-            # Generate a random name
-            new_name = ''.join(random.choices(string.ascii_lowercase + string.digits, k=24))
+            # Strip mode?:
+            if args.strip and nonalphanum(os.path.split(file)[1]):# and not len(os.path.split(file)[1]) < 1:
+                print("Strip:", os.path.split(file)[1])
+                new_name = re.sub('[^0-9a-zA-Z\-._]+', '', os.path.split(file_name)[1])
+                if len(new_name) < 1:
+                    new_name = ''.join(random.choices(string.ascii_lowercase + string.digits, k=24))
+
+            # Or generate a random name
+            else:
+                new_name = ''.join(random.choices(string.ascii_lowercase + string.digits, k=24))
 
             # Get the current date and time
             if args.now:
@@ -76,19 +85,24 @@ for root, dirs, files in os.walk(root_dir, topdown=not args.recursive):
             # Did we give a suffix at the command line?
             if args.suffix:
                 # Checking for ".":
-                if not str.startswith(".", args.suffix):
-                    file_suffix = "."+ args.suffix
+                if not str.startswith('.', args.suffix):
+                    file_suffix = '.'+ args.suffix
                 else:
                     file_suffix = args.suffix
-            new_file = date_time_str + '_' + new_name + file_suffix
+            if not args.strip:
+                new_file = date_time_str + '_' + new_name + file_suffix
+            else:
+                new_file = new_name + file_suffix
             
             # Get the directory name of the file
             directory = os.path.dirname(file)
             
+            # Strip mode?:
+            # if args.strip and nonalphanum(os.path.split(file)[1]) and not len(os.path.split(file)[1]) < 1:
+            #     print("Strip:", os.path.split(file)[1])
+            #     new_file = re.sub('[^0-9a-zA-Z\-._]+', '', os.path.split(file)[1])
+            
             # Rename the file
-            if args.strip and nonalphanum(os.path.split(file)[1]) and not len(os.path.split(file)[1]) < 1:
-                print("Strip:", os.path.split(file)[1])
-                new_file = re.sub('[^0-9a-zA-Z\-._]+', '', os.path.split(file)[1])
             print("Renaming:", file, "to:", new_file)
             os.rename(os.path.join(directory, file), os.path.join(directory, new_file))
     if args.dir:
@@ -96,7 +110,16 @@ for root, dirs, files in os.walk(root_dir, topdown=not args.recursive):
             if args.auto and not nonalphanum(dir):
                 print("Not ranaming:", dir)
                 continue
-            new_name = ''.join(random.choices(string.ascii_lowercase + string.digits, k=24))
+            
+            if args.strip and nonalphanum(dir):# and not len(os.path.split(file)[1]) < 1:
+                print("Strip:", os.path.split(file)[1])
+                new_name = re.sub('[^0-9a-zA-Z\-._]+', '', os.path.split(file_name)[1])
+                if len(new_name) < 1:
+                    new_name = ''.join(random.choices(string.ascii_lowercase + string.digits, k=24))
+
+            # Or generate a random name
+            else:
+                new_name = ''.join(random.choices(string.ascii_lowercase + string.digits, k=24))
             
             if args.now:
                 date_time = datetime.datetime.now()
@@ -106,7 +129,10 @@ for root, dirs, files in os.walk(root_dir, topdown=not args.recursive):
             
             date_time_str = date_time.strftime('%Y-%m-%d_%H-%M-%S')
             
-            new_file = date_time_str + '_' + new_name
+            if args.strip:
+                new_file = new_name
+            else:
+                new_file = date_time_str + '_' + new_name
             directory = dir
             # Rename the file
             print("Renaming:", directory, "to:", new_file)
