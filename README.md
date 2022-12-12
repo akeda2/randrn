@@ -6,7 +6,7 @@ By default, including:
 - Modyfied date and time
 - Counting from 0001 to 9999, sorted by modyfied date/time
 - 16 alphanumerical random characters
-- Original suffix or one by your choice
+- Original extension or one by your choice
 
 #### Example:
 ```
