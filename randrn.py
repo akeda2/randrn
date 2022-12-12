@@ -99,7 +99,8 @@ for root, dirs, files in os.walk(root_dir, topdown=not args.recursive):
     #         continue
     # Iterate over the list of files
     for file in wildcard_files:
-        if args.auto and not nonalphanum(file):
+        if args.auto and not nonalphanum(os.path.split(file)[1])
+            #nonalphanum(file)
             #dirs.remove(file)
             print("Not renaming:", file)
             continue
