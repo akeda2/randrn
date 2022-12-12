@@ -93,7 +93,7 @@ else:# args.recursive:
 
                 # Get the current date and time
                 #date_time = datetime.datetime.now()
-                file_date_time = os.path.getctime(file)
+                file_date_time = os.path.getmtime(file)
                 date_time = datetime.datetime.fromtimestamp(file_date_time)
 
                 # Format the date and time in the desired way
