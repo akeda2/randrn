@@ -46,7 +46,7 @@ print("Pattern:", pattern)
 #     #suff = sys.argv[2]
 # else:
 #     suff = False
-if not args.recursive:
+if 1 == 0: #not args.recursive:
     print("Files:", files)
     # Iterate over the files
     for file in files:
@@ -88,17 +88,17 @@ if not args.recursive:
             # Rename the file
             print("Renaming:", directory, "to:", new_file)
             os.rename(directory, new_file)
-elif args.recursive:
+else:# args.recursive:
     root_dir = os.getcwd()
     # Iterate over the directory tree using os.walk()
     if args.recursive:
-        topdown = False
+        rtopdown = False
     else:
-        topdown = True
+        rtopdown = True
 
-    for root, dirs, files in os.walk(root_dir, topdown=args.recursive):
+    for root, dirs, files in os.walk(root_dir, topdown=not args.recursive):
         
-        if args.nonrec:
+        if not args.recursive: #args.nonrec:
             dirs.clear()
         # Use glob to generate a list of files that match the wildcard pattern
         wildcard_files = glob.glob(os.path.join(root, args.wildcard))
@@ -136,6 +136,6 @@ elif args.recursive:
                 # Rename the file
                 print("Renaming:", directory, "to:", new_file)
                 os.rename(directory, new_file)
-        if args.nonrec:
+        if not args.recursive:
             #for dir in dirs:
             break;
