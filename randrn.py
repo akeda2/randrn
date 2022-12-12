@@ -93,7 +93,7 @@ for root, dirs, files in os.walk(root_dir, topdown=not args.recursive):
     
     for file in wildcard_files:
         if args.auto and nonalphanum(file):
-            files.remove(file)
+            #files
             print("Removing:", file)
             continue
     # Iterate over the list of files
