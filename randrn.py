@@ -84,7 +84,7 @@ for root, dirs, files in os.walk(root_dir, topdown=not args.recursive):
             # Did we give a suffix at the command line?
             if args.suffix:
                 # Checking for ".":
-                if not str.startswith('.', args.suffix):
+                if not args.suffix.startswith('.'):
                     file_suffix = '.'+ args.suffix
                 else:
                     file_suffix = args.suffix
