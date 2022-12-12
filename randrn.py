@@ -87,6 +87,7 @@ for root, dirs, files in os.walk(root_dir, topdown=not args.recursive):
             
             # Rename the file
             if args.strip and not len(str(os.path.split(file)[1])) < 1:
+                print("Strip:", file)
                 new_file = re.sub('[^0-9a-zA-Z\-._]+', '', os.path.split(file)[1])
             print("Renaming:", file, "to:", new_file)
             os.rename(os.path.join(directory, file), os.path.join(directory, new_file))
