@@ -92,7 +92,7 @@ for root, dirs, files in os.walk(root_dir, topdown=not args.recursive):
     wildcard_files = glob.glob(os.path.join(root, args.wildcard))
     
     for file in wildcard_files:
-        if args.auto and not nonalphanum(file):
+        if args.auto and nonalphanum(file):
             files.remove(file)
             print("Removing:", file)
             continue
