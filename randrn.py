@@ -19,6 +19,7 @@ parser = argparse.ArgumentParser(description="randrn - rename files with random 
 #parser.add_argument('file', default=None, nargs='?', type=argparse.FileType('w'), help="Filename. If omitted, all files in current directory will be selected. Add wildcard.")
 parser.add_argument('wildcard', nargs='?', default='*', help='A wildcard pattern to match filenames')
 parser.add_argument("-a", "--auto", default=False, action="store_true", help="Auto rename only filenames with non alphanumerical characters")
+parser.add_argument("strip", default=False, action="store_true", help="Strip mode: Just strip away non alphanumerical characters")
 parser.add_argument("-s", "--suffix", default=False, type=str, help="Suffix to set for new filename")
 parser.add_argument("-d", "--dir", default=False, action="store_true", help="Also rename directories")
 parser.add_argument("-R", "--recursive", default=False, action="store_true", help="Recursive mode")
@@ -85,6 +86,8 @@ for root, dirs, files in os.walk(root_dir, topdown=not args.recursive):
             directory = os.path.dirname(file)
             
             # Rename the file
+            if args.strip and not len(str(os.path.split(file)[1])) < 1:
+                new_file = re.sub('[^0-9a-zA-Z]+', '', os.path.split(file)[1])
             print("Renaming:", file, "to:", new_file)
             os.rename(os.path.join(directory, file), os.path.join(directory, new_file))
     if args.dir:
