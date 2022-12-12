@@ -94,7 +94,7 @@ else:# args.recursive:
                 # Get the current date and time
                 #date_time = datetime.datetime.now()
                 file_date_time = os.path.getctime(file)
-                date_time = datetime.fromtimestamp(file_date_time)
+                date_time = datetime.datetime.fromtimestamp(file_date_time)
 
                 # Format the date and time in the desired way
                 date_time_str = date_time.strftime('%Y-%m-%d_%H-%M-%S')
