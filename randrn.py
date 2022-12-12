@@ -63,7 +63,7 @@ for root, dirs, files in os.walk(root_dir, topdown=not args.recursive):
             # Strip mode?:
             if args.strip and nonalphanum(os.path.split(file)[1]):# and not len(os.path.split(file)[1]) < 1:
                 print("Strip:", os.path.split(file)[1])
-                new_name = re.sub('[^0-9a-zA-Z\-._]+', '', os.path.split(file_name)[1])
+                new_name = re.sub('[^0-9a-zA-Z\-._]+', ''.join(random.choices(string.ascii_lowercase + string.digits, k=2)), os.path.split(file_name)[1])
                 if len(new_name) < 1:
                     new_name = ''.join(random.choices(string.ascii_lowercase + string.digits, k=24))
 
@@ -113,7 +113,7 @@ for root, dirs, files in os.walk(root_dir, topdown=not args.recursive):
             
             if args.strip and nonalphanum(dir):# and not len(os.path.split(file)[1]) < 1:
                 print("Strip:", os.path.split(file)[1])
-                new_name = re.sub('[^0-9a-zA-Z\-._]+', '', os.path.split(file_name)[1])
+                new_name = re.sub('[^0-9a-zA-Z\-._]+', ''.join(random.choices(string.ascii_lowercase + string.digits, k=2)), os.path.split(file_name)[1])
                 if len(new_name) < 1:
                     new_name = ''.join(random.choices(string.ascii_lowercase + string.digits, k=24))
 
