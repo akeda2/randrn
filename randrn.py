@@ -91,9 +91,14 @@ for root, dirs, files in os.walk(root_dir, topdown=not args.recursive):
     # Use glob to generate a list of files that match the wildcard pattern
     wildcard_files = glob.glob(os.path.join(root, args.wildcard))
     
+    for file in wildcard_files:
+        if args.auto and not nonalphanum(file):
+            files.remove(file)
+            continue
     # Iterate over the list of files
     for file in wildcard_files:
         if args.auto and not nonalphanum(file):
+            dirs.remove(file)
             continue
         if os.path.isfile(file):
             # Split the file name and the suffix
