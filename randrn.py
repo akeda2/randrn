@@ -124,10 +124,10 @@ for root, dirs, files in os.walk(root_dir, topdown=not args.recursive):
             # Rename the file
             print("Renaming:", file, "to:", new_file)
             os.rename(os.path.join(directory, file), os.path.join(directory, new_file))
-    if args.auto and not nonalphanum(dir):
-            continue
     if args.dir:
         for dir in dirs:
+            if args.auto and not nonalphanum(dir):
+                continue
             new_name = ''.join(random.choices(string.ascii_lowercase + string.digits, k=24))
             
             if args.now:
