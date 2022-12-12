@@ -92,16 +92,9 @@ for root, dirs, files in os.walk(root_dir, topdown=not args.recursive):
     # Use glob to generate a list of files that match the wildcard pattern
     wildcard_files = glob.glob(os.path.join(root, args.wildcard))
     
-    # for file in wildcard_files:
-    #     if args.auto and not nonalphanum(file):
-    #         #files
-    #         print("Removing:", file)
-    #         continue
     # Iterate over the list of files
     for file in wildcard_files:
         if args.auto and not nonalphanum(os.path.split(file)[1]):
-            #nonalphanum(file)
-            #dirs.remove(file)
             print("Not renaming:", file)
             continue
         if os.path.isfile(file):
@@ -124,7 +117,10 @@ for root, dirs, files in os.walk(root_dir, topdown=not args.recursive):
             # Join the date and time, the random name, and the file suffix
             # Did we give a suffix at the command line?
             if args.suffix:
-                file_suffix = args.suffix
+                if not str.startswith(".", args.suffix):
+                    file_suffix = "."+ args.suffix
+                else
+                    file_suffix = args.suffix
             new_file = date_time_str + '_' + new_name + file_suffix
             
             # Get the directory name of the file
