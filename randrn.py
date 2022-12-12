@@ -91,7 +91,7 @@ for root, dirs, files in os.walk(root_dir, topdown=not args.recursive):
                 else:
                     file_suffix = args.suffix
             if not args.strip:
-                new_file = date_time_str + '_' + f"{i:04d}" + new_name + file_suffix
+                new_file = date_time_str + '_' + f"{i:04d}" +'_'+ new_name + file_suffix
             else:
                 new_file = new_name + file_suffix
             
