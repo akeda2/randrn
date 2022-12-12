@@ -122,7 +122,7 @@ else:# args.recursive:
                 # Get the directory name of the file
                 directory = os.path.dirname(file)
                 # Rename the file
-                print("Renaming:", file, "to:", directory, new_file)
+                print("Renaming:", file, "to:", new_file)
                 os.rename(os.path.join(directory, file), os.path.join(directory, new_file))
         if args.dir:
             for dir in dirs:
