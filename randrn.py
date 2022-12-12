@@ -136,6 +136,7 @@ for root, dirs, files in os.walk(root_dir, topdown=not args.recursive):
     if args.dir:
         for dir in dirs:
             if args.auto and not nonalphanum(dir):
+                print("Not ranaming:", dir)
                 continue
             new_name = ''.join(random.choices(string.ascii_lowercase + string.digits, k=24))
             
