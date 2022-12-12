@@ -6,6 +6,7 @@ import string
 import datetime
 import glob
 import argparse
+import re
 
 # USAGE:
 # randrn.py wildcard -s .suffix
@@ -17,6 +18,7 @@ parser = argparse.ArgumentParser(description="randrn - rename files with random 
                                 formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 #parser.add_argument('file', default=None, nargs='?', type=argparse.FileType('w'), help="Filename. If omitted, all files in current directory will be selected. Add wildcard.")
 parser.add_argument('wildcard', nargs='?', default='*', help='A wildcard pattern to match filenames')
+parser.add_argument("-a", "--auto", default=False, action="store_true", help="Auto rename only filenames with non alphanumerical characters")
 parser.add_argument("-s", "--suffix", default=False, type=str, help="Suffix to set for new filename")
 parser.add_argument("-d", "--dir", default=False, action="store_true", help="Also rename directories")
 parser.add_argument("-R", "--recursive", default=False, action="store_true", help="Recursive mode")
@@ -29,6 +31,11 @@ config = vars(args)
 pattern = args.wildcard
 files = glob.glob(pattern)
 print("Pattern:", pattern)
+
+def nonalphanum(s):
+    #return bool(re.search(r'[^a-zå-öA-ZÅ-Ö0-9]', s))
+    pattern = re.compile(r'[^\w]|[^a-zA-ZåäöÅÄÖ]')
+    return bool(pattern.search(s))
 
 # if 1 == 0: #not args.recursive:
 #     print("Files:", files)
@@ -79,12 +86,15 @@ for root, dirs, files in os.walk(root_dir, topdown=not args.recursive):
     
     # If we don't want to go into subdirs, clear dirs.
     if not args.recursive:
-        dirs.clear()
+        dirs.clear()    
+
     # Use glob to generate a list of files that match the wildcard pattern
     wildcard_files = glob.glob(os.path.join(root, args.wildcard))
     
     # Iterate over the list of files
     for file in wildcard_files:
+        if args.auto and not nonalphanum(file):
+            continue
         if os.path.isfile(file):
             # Split the file name and the suffix
             file_name, file_suffix = os.path.splitext(file)
@@ -114,6 +124,8 @@ for root, dirs, files in os.walk(root_dir, topdown=not args.recursive):
             # Rename the file
             print("Renaming:", file, "to:", new_file)
             os.rename(os.path.join(directory, file), os.path.join(directory, new_file))
+    if args.auto and not nonalphanum(dir):
+            continue
     if args.dir:
         for dir in dirs:
             new_name = ''.join(random.choices(string.ascii_lowercase + string.digits, k=24))
