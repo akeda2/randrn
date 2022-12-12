@@ -14,7 +14,7 @@ parser = argparse.ArgumentParser(description="randrn - rename files with random 
 parser.add_argument('wildcard', nargs='?', default='*', help='A wildcard pattern to match filenames')
 parser.add_argument("-a", "--auto", default=False, action="store_true", help="Auto rename only filenames with non alphanumerical characters")
 parser.add_argument("-S", "--strip", default=False, action="store_true", help="Strip mode: Just strip away non alphanumerical characters")
-parser.add_argument("-s", "--suffix", default=False, type=str, help="Suffix to set for new filename")
+parser.add_argument("-e", "--extension", default=False, type=str, help="Extension to set for new filename")
 parser.add_argument("-d", "--dir", default=False, action="store_true", help="Also rename directories")
 parser.add_argument("-R", "--recursive", default=False, action="store_true", help="Recursive mode")
 #parser.add_argument("-n", "--nonrec", default=False, action="store_true", help="Testing...")
@@ -54,7 +54,7 @@ for root, dirs, files in os.walk(root_dir, topdown=not args.recursive):
             continue
         if os.path.isfile(file):
             # Split the file name and the suffix:
-            file_name, file_suffix = os.path.splitext(file)
+            file_name, file_extension = os.path.splitext(file)
 
             # Strip mode?:
             if args.strip and nonalphanum(os.path.split(file)[1]):
@@ -78,16 +78,16 @@ for root, dirs, files in os.walk(root_dir, topdown=not args.recursive):
 
             # Join the date and time, the random name, and the file suffix
             # Did we give a suffix at the command line?
-            if args.suffix:
+            if args.extension:
                 # Checking for ".":
-                if not args.suffix.startswith('.'):
-                    file_suffix = '.'+ args.suffix
+                if not args.extension.startswith('.'):
+                    file_extension = '.'+ args.extension
                 else:
-                    file_suffix = args.suffix
+                    file_extension = args.extension
             if not args.strip:
-                new_file = date_time_str + '_' + f"{i:04d}" +'_'+ new_name + file_suffix
+                new_file = date_time_str + '_' + f"{i:04d}" +'_'+ new_name + file_extension
             else:
-                new_file = new_name + file_suffix
+                new_file = new_name + file_extension
             
             # Get the directory name of the file
             directory = os.path.dirname(file)
