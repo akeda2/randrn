@@ -59,7 +59,10 @@ for root, dirs, files in os.walk(root_dir, topdown=not args.recursive):
             # Strip mode?:
             if args.strip and nonalphanum(os.path.split(file)[1]):
                 print("Strip:", os.path.split(file)[1])
-                new_name = re.sub('[^0-9a-zA-Z\-._]+', '_'+''.join(random.choices(string.ascii_lowercase + string.digits, k=8)), os.path.split(file_name)[1])
+                # First, strip all whitespace and replace with underscore:
+                new_name = re.sub(r'\s+', '_', os.path.split(file_name)[1])
+                # Then, strip all other garbage and replace with randomness:
+                new_name = re.sub('[^0-9a-zA-Z\-._]+', '_'+''.join(random.choices(string.ascii_lowercase + string.digits, k=8)), new_name)
                 if len(new_name) < 1:
                     new_name = ''.join(random.choices(string.ascii_lowercase + string.digits, k=16))
             # Or generate a random name:
