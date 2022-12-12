@@ -24,28 +24,11 @@ parser.add_argument("-n", "--nonrec", default=False, action="store_true", help="
 args = parser.parse_args()
 config = vars(args)
 
-# #if len(sys.argv) < 2:
-# if not args.wildcard:
-# # Get the current working directory
-#     directory = os.getcwd()
-# # Get a list of all the files in the directory
-#     files = os.listdir(directory)
-#     suff = False
-# else:
 # Use glob to find all files that match the wildcard pattern in the current directory
-    #pattern = glob.escape(sys.argv[1])
-#    pattern = sys.argv[1]
-
 pattern = args.wildcard
 files = glob.glob(pattern)
 print("Pattern:", pattern)
 
-#if len(sys.argv) > 2:
-# if args.suffix:
-#     suff = args.suffix
-#     #suff = sys.argv[2]
-# else:
-#     suff = False
 if 1 == 0: #not args.recursive:
     print("Files:", files)
     # Iterate over the files
@@ -91,10 +74,10 @@ if 1 == 0: #not args.recursive:
 else:# args.recursive:
     root_dir = os.getcwd()
     # Iterate over the directory tree using os.walk()
-    if args.recursive:
-        rtopdown = False
-    else:
-        rtopdown = True
+    # if args.recursive:
+    #     rtopdown = False
+    # else:
+    #     rtopdown = True
 
     for root, dirs, files in os.walk(root_dir, topdown=not args.recursive):
         
@@ -108,19 +91,25 @@ else:# args.recursive:
             if os.path.isfile(file):
                 # Split the file name and the suffix
                 file_name, file_suffix = os.path.splitext(file)
+
                 # Generate a random name
                 new_name = ''.join(random.choices(string.ascii_lowercase + string.digits, k=24))
+
                 # Get the current date and time
                 date_time = datetime.datetime.now()
+
                 # Format the date and time in the desired way
                 date_time_str = date_time.strftime('%Y-%m-%d_%H-%M-%S')
+
                 # Join the date and time, the random name, and the file suffix
                 # Did we give a suffix at the command line?
                 if args.suffix:
                     file_suffix = args.suffix
                 new_file = date_time_str + '_' + new_name + file_suffix
+                
                 # Get the directory name of the file
                 directory = os.path.dirname(file)
+                
                 # Rename the file
                 print("Renaming:", file, "to:", new_file)
                 os.rename(os.path.join(directory, file), os.path.join(directory, new_file))
@@ -131,11 +120,9 @@ else:# args.recursive:
                 date_time_str = date_time.strftime('%Y-%m-%d_%H-%M-%S')
                 
                 new_file = date_time_str + '_' + new_name
-                #directory = os.path.dirname(file)
                 directory = dir
                 # Rename the file
                 print("Renaming:", directory, "to:", new_file)
                 os.rename(directory, new_file)
         if not args.recursive:
-            #for dir in dirs:
             break;
