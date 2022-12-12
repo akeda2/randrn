@@ -8,12 +8,6 @@ import glob
 import argparse
 import re
 
-# USAGE:
-# randrn.py wildcard -s .suffix
-# Example:
-# randrn.py glenn* -s .mp4
-# Don't forget the "." in the suffix!
-
 parser = argparse.ArgumentParser(description="randrn - rename files with random names",
                                 formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 #parser.add_argument('file', default=None, nargs='?', type=argparse.FileType('w'), help="Filename. If omitted, all files in current directory will be selected. Add wildcard.")
@@ -67,10 +61,10 @@ for root, dirs, files in os.walk(root_dir, topdown=not args.recursive):
                 print("Strip:", os.path.split(file)[1])
                 new_name = re.sub('[^0-9a-zA-Z\-._]+', '_'+''.join(random.choices(string.ascii_lowercase + string.digits, k=8)), os.path.split(file_name)[1])
                 if len(new_name) < 1:
-                    new_name = ''.join(random.choices(string.ascii_lowercase + string.digits, k=24))
+                    new_name = ''.join(random.choices(string.ascii_lowercase + string.digits, k=16))
             # Or generate a random name:
             else:
-                new_name = ''.join(random.choices(string.ascii_lowercase + string.digits, k=24))
+                new_name = ''.join(random.choices(string.ascii_lowercase + string.digits, k=16))
 
             # Get the current date and time OR mtime from file?:
             if args.now:
@@ -113,10 +107,10 @@ for root, dirs, files in os.walk(root_dir, topdown=not args.recursive):
                 print("Strip:", os.path.split(file)[1])
                 new_name = re.sub('[^0-9a-zA-Z\-._]+', ''.join(random.choices(string.ascii_lowercase + string.digits, k=8)), os.path.split(file_name)[1])
                 if len(new_name) < 1:
-                    new_name = ''.join(random.choices(string.ascii_lowercase + string.digits, k=24))
+                    new_name = ''.join(random.choices(string.ascii_lowercase + string.digits, k=16))
             # Or generate a random name:
             else:
-                new_name = ''.join(random.choices(string.ascii_lowercase + string.digits, k=24))
+                new_name = ''.join(random.choices(string.ascii_lowercase + string.digits, k=16))
             
             if args.now:
                 date_time = datetime.datetime.now()
