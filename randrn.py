@@ -86,8 +86,8 @@ root_dir = os.getcwd()
 for root, dirs, files in os.walk(root_dir, topdown=not args.recursive):
     
     # If we don't want to go into subdirs, clear dirs.
-    if not args.recursive:
-        dirs.clear()    
+    # if not args.recursive:
+    #     dirs.clear()    
 
     # Use glob to generate a list of files that match the wildcard pattern
     wildcard_files = glob.glob(os.path.join(root, args.wildcard))
@@ -153,5 +153,7 @@ for root, dirs, files in os.walk(root_dir, topdown=not args.recursive):
             # Rename the file
             print("Renaming:", directory, "to:", new_file)
             os.rename(directory, new_file)
+            if not args.recursive:
+                break
     if not args.recursive:
         break;
