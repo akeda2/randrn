@@ -97,7 +97,16 @@ for root, dirs, files in os.walk(root_dir, topdown=not args.recursive):
             
             # Actually enaming the file:
             print("Renaming:", file, "to:", new_file)
-            os.rename(os.path.join(directory, file), os.path.join(directory, new_file))
+            try:
+                os.rename(os.path.join(directory, file), os.path.join(directory, new_file))
+            except OSError as exc:
+                print("ERROR")
+                if exc.errno == 36:
+                    try:
+                        os.rename(file, new_file)
+                    except:
+                        print("FAILED")
+                        pass
     if args.dir:
         for dir in dirs:
             # Auto mode?:
