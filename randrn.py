@@ -106,7 +106,7 @@ for root, dirs, files in os.walk(root_dir, topdown=not args.recursive):
                         os.rename(file, new_file)
                     except:
                         print("FAILED")
-                        pass
+                        raise
     if args.dir:
         for dir in dirs:
             # Auto mode?:
