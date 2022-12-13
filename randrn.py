@@ -103,7 +103,7 @@ for root, dirs, files in os.walk(root_dir, topdown=not args.recursive):
                 print("ERROR")
                 if exc.errno == 36:
                     try:
-                        os.rename(file, new_file)
+                        os.rename(os.path.basename(file), new_file)
                     except:
                         print("FAILED")
                         raise
