@@ -10,14 +10,12 @@ import re
 
 parser = argparse.ArgumentParser(description="randrn - rename files with random names",
                                 formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-#parser.add_argument('file', default=None, nargs='?', type=argparse.FileType('w'), help="Filename. If omitted, all files in current directory will be selected. Add wildcard.")
 parser.add_argument('wildcard', nargs='?', default='*', help='A wildcard pattern to match filenames')
 parser.add_argument("-a", "--auto", default=False, action="store_true", help="Auto rename only filenames with non alphanumerical characters")
 parser.add_argument("-S", "--strip", default=False, action="store_true", help="Strip mode: Just strip away non alphanumerical characters")
 parser.add_argument("-e", "--extension", default=False, type=str, help="Extension to set for new filename")
 parser.add_argument("-d", "--dir", default=False, action="store_true", help="Also rename directories")
 parser.add_argument("-R", "--recursive", default=False, action="store_true", help="Recursive mode")
-#parser.add_argument("-n", "--nonrec", default=False, action="store_true", help="Testing...")
 parser.add_argument("-n", "--now", default=False, action="store_true", help="Use datetime NOW iso mtime")
 args = parser.parse_args()
 config = vars(args)
@@ -38,7 +36,7 @@ root_dir = os.getcwd()
 # Iterate over the directory tree using os.walk()
 for root, dirs, files in os.walk(root_dir, topdown=not args.recursive):
     
-    # If we don't want to go into subdirs, clear dirs.
+    # If we don't want to go into subdirs, clear dirs. Legacy, for reference
     # if not args.recursive:
     #     dirs.clear()    
 
@@ -80,7 +78,7 @@ for root, dirs, files in os.walk(root_dir, topdown=not args.recursive):
             date_time_str = date_time.strftime('%Y-%m-%d_%H-%M-%S')
 
             # Join the date and time, the random name, and the file suffix
-            # Did we give a suffix at the command line?
+            # Did we give an extension at the command line?
             if args.extension:
                 # Checking for ".":
                 if not args.extension.startswith('.'):
