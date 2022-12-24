@@ -19,6 +19,7 @@ parser.add_argument("-R", "--recursive", default=False, action="store_true", hel
 parser.add_argument("-n", "--now", default=False, action="store_true", help="Use datetime NOW iso mtime")
 args = parser.parse_args()
 config = vars(args)
+print(config)
 if args.strip:
     args.auto = True
 # Use glob to find all files that match the wildcard pattern in the current directory
@@ -60,8 +61,9 @@ for root, dirs, files in os.walk(root_dir, topdown=not args.recursive):
                 # First, strip all whitespace and replace with underscore:
                 new_name = re.sub(r'\s+', '_', os.path.split(file_name)[1])
                 # Then, strip all other garbage and replace with randomness:
-                new_name = re.sub('[^0-9a-zA-Z\-._]+', '_'+''.join(random.choices(string.ascii_lowercase + string.digits, k=2)), new_name)
-                if len(new_name) < 1:
+                new_name = re.sub('[^0-9a-zA-Z\-._]+', '',new_name)
+                new_name = new_name + '_'+''.join(random.choices(string.ascii_lowercase + string.digits, k=4))
+                if len(new_name) <= 1:
                     new_name = ''.join(random.choices(string.ascii_lowercase + string.digits, k=16))
             # Or generate a random name:
             else:
@@ -114,9 +116,14 @@ for root, dirs, files in os.walk(root_dir, topdown=not args.recursive):
             
             # Strip mode?:
             if args.strip and nonalphanum(dir):
+                print(dir)
                 print("Strip:", os.path.split(file)[1])
-                new_name = re.sub('[^0-9a-zA-Z\-._]+', ''.join(random.choices(string.ascii_lowercase + string.digits, k=8)), os.path.split(file_name)[1])
-                if len(new_name) < 1:
+                print("Strip:", os.path.dirname(dir))
+                # First, strip all whitespace and replace with underscore:
+                new_name = re.sub(r'\s+', '_', dir)#os.path.dirname(dir))#os.path.split(file_name)[1])
+                new_name = re.sub('[^0-9a-zA-Z\-._]+', '', new_name)#os.path.dirname(dir))
+                new_name = new_name + ''.join(random.choices(string.ascii_lowercase + string.digits, k=8))#, os.path.split(dir)[1]
+                if len(new_name) <= 1:
                     new_name = ''.join(random.choices(string.ascii_lowercase + string.digits, k=16))
             # Or generate a random name:
             else:
