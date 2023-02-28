@@ -54,11 +54,19 @@ for root, dirs, files in os.walk(root_dir, topdown=not args.recursive):
         if os.path.isfile(file):
             # Split the file name and the suffix:
             file_name, file_extension = os.path.splitext(file)
-            print(file, file_name, file_extension)
+            try:
+                print(file, file_name, file_extension)
+            except:
+                print("Unicode error in filename, not printing to terminal")
+                pass
 
             # Strip mode?:
             if args.strip and nonalphanum(os.path.split(file)[1]):
-                print("Strip:", os.path.split(file)[1])
+                try:
+                    print("Strip:", os.path.split(file)[1])
+                except:
+                    print("Unicode error in filename, not printing to terminal")
+                    pass
                 # First, strip all whitespace and replace with underscore:
                 new_name = re.sub(r'\s+', '_', os.path.split(file_name)[1])
                 # Then, strip all other garbage and replace with randomness:
