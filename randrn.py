@@ -54,6 +54,7 @@ for root, dirs, files in os.walk(root_dir, topdown=not args.recursive):
         if os.path.isfile(file):
             # Split the file name and the suffix:
             file_name, file_extension = os.path.splitext(file)
+            print(file, file_name, file_extension)
 
             # Strip mode?:
             if args.strip and nonalphanum(os.path.split(file)[1]):
