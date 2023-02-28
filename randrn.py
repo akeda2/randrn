@@ -105,7 +105,10 @@ for root, dirs, files in os.walk(root_dir, topdown=not args.recursive):
             directory = os.path.dirname(file)
             
             # Actually enaming the file:
-            print("Renaming:", file, "to:", new_file)
+            try:
+                print("Renaming:", file, "to:", new_file)
+            except:
+                print("Unicode error in filename, not printing to terminal")
             try:
                 os.rename(os.path.join(directory, file), os.path.join(directory, new_file))
             except OSError as exc:
