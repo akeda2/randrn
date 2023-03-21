@@ -24,6 +24,13 @@ $ randrn --strip Some*
 Some file name with &%¤# in it.txt --> Some_file_name_with__0i29kwlg_in_it.txt
 Spaces are replaced with underscores, then garbage characters are replaced with alphanumerical random characters.
 ```
+## Installation:
+```
+To build with pyinstaller:
+make
+To just copy to /usr/local/bin/randrn:
+./inst.sh
+```
 ## Usage:
 ```
 randrn -h
