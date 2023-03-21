@@ -28,6 +28,7 @@ Spaces are replaced with underscores, then garbage characters are replaced with 
 ```
 To build with pyinstaller:
 make
+make install
 To just copy to /usr/local/bin/randrn:
 ./inst.sh
 ```
