@@ -23,4 +23,4 @@ BINDIR ?= $(PREFIX)/bin
 
 install:
 	mkdir -p $(DESTDIR)$(BINDIR)
-install -m755 randrn $(DESTDIR)$(BINDIR)/randrn
+	install -m755 randrn $(DESTDIR)$(BINDIR)/randrn
