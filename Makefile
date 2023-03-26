@@ -6,7 +6,7 @@ all: randrn del
 
 # Create randrn executable
 randrn:
-	pyinstaller randrn.py -F
+	pyinstaller --clean randrn.py -F
 	mv dist/randrn .
 
 # Remove files created by pyinstaller
@@ -15,8 +15,8 @@ del:
 
 # Clear pyinstall cache and delete file
 clean:
-	pyinstaller --clean randrn.py
-	rm -rf ./dist/ ./build/ ./*.spec ./*.pyc ./*.log randrn.spec dist/
+	#pyinstaller --clean randrn.py
+	rm -rf ./dist/ ./build/ ./*.spec ./*.pyc ./*.log randrn.spec dist/ randrn
 
 PREFIX ?= /usr/local
 BINDIR ?= $(PREFIX)/bin
